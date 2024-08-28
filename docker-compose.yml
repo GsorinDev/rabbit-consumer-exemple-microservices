@@ -1,0 +1,48 @@
+version: '3'
+services:
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" # Port for RabbitMQ server
+      - "15672:15672" # Port for RabbitMQ management UI
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - web
+
+  web-watcher-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web-watcher-api
+    environment:
+      MICROSERVICE_NAME: web-watcher-api
+      NODE_ENV: recette
+    ports:
+      - "3000:3000"
+    depends_on:
+      - webscrapp-service
+      - rabbitmq
+    networks:
+      - web
+
+  webscrapp-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: webscrapp-service
+    depends_on:
+      - rabbitmq
+    environment:
+      MICROSERVICE_NAME: webscrapp-service
+      NODE_ENV: recette
+    networks:
+      - web
+
+networks:
+  web:
+
+volumes:
+  rabbitmq-data:
