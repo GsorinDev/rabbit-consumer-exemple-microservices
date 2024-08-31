@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { WebscrapService } from './webscrap.service';
-import { RabbitModule } from '../rabbit/rabbit.module';
+import { EventModule } from '../event/event.module';
 
 @Module({
-  imports: [RabbitModule],
+  imports: [EventModule],
   providers: [WebscrapService],
+  exports: [WebscrapService],
 })
 export class WebscrapModule {}

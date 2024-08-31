@@ -5,8 +5,8 @@ services:
     image: "rabbitmq:3-management"
     container_name: rabbitmq
     ports:
-      - "5672:5672" # Port for RabbitMQ server
-      - "15672:15672" # Port for RabbitMQ management UI
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
     networks:
@@ -41,8 +41,19 @@ services:
     networks:
       - web
 
+  mongodb:
+    image: "mongo:latest"
+    container_name: mongodb
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - web
+
 networks:
   web:
 
 volumes:
   rabbitmq-data:
+  mongodb-data:

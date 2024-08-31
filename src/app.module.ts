@@ -2,12 +2,19 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { WebscrapModule } from './webscrap/webscrap.module';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 import { RabbitModule } from './rabbit/rabbit.module';
 
-@Module({})
+@Module({
+  imports: [RabbitModule],
+})
 export class AppModule {
   static forRoot(): DynamicModule {
-    const modules = [RabbitModule];
+    const modules: any[] = [
+      MongooseModule.forRoot('mongodb://mongodb:27017/web-watcher'),
+      RabbitModule,
+    ];
     const controllers = [];
     const providers = [];
     const environment = process.env.NODE_ENV || 'local';
@@ -16,7 +23,15 @@ export class AppModule {
     if (environment === 'local') {
       return {
         module: AppModule,
-        imports: [WebscrapModule, RabbitModule],
+        imports: [
+          WebscrapModule,
+          ConfigModule.forRoot({
+            envFilePath: 'src/config/.env',
+            isGlobal: true,
+          }),
+          MongooseModule.forRoot('mongodb://localhost:27018/web-watcher'),
+          RabbitModule,
+        ],
         controllers: [AppController],
         providers: [AppService],
       };
