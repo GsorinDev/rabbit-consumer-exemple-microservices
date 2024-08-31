@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Logger } from '@nestjs/common';
 
-import { LoggerService } from './logger/logger.service';
-import { RabbitService } from './rabbit/rabbit.service';
+import { LoggerService } from './tools/logger/logger.service';
+import { RabbitService } from './tools/rabbit/rabbit.service';
 
 @Controller()
 export class AppController {

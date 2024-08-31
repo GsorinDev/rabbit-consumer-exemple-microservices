@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { LoggerService } from '../logger/logger.service';
+import { LoggerService } from '../../tools/logger/logger.service';
 import { EventService } from '../event/event.service';
 import { NameEnumType } from '../event/enums/nameEnumType.enum';
 import { ProcessEnumType } from '../event/enums/processEnumType.enum';
