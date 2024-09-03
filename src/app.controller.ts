@@ -1,12 +1,8 @@
-import { Body, Controller, Get, Logger } from '@nestjs/common';
-
-import { LoggerService } from './tools/logger/logger.service';
+import { Body, Controller, Get } from '@nestjs/common';
 import { RabbitService } from './tools/rabbit/rabbit.service';
 
 @Controller()
 export class AppController {
-  logger = new LoggerService(AppController.name);
-
   constructor(private readonly rabbitService: RabbitService) {}
 
   @Get('publish')

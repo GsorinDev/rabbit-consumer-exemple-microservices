@@ -5,8 +5,11 @@ import { WebscrapModule } from './internal/webscrap/webscrap.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RabbitModule } from './tools/rabbit/rabbit.module';
+import { ThemeModule } from './api/theme/theme.module';
 
-@Module({})
+@Module({
+  imports: [],
+})
 export class AppModule {
   static forRoot(): DynamicModule {
     const environment = process.env.NODE_ENV;
@@ -31,7 +34,7 @@ export class AppModule {
     const providers = [];
 
     if (environment === 'local') {
-      modules.push(WebscrapModule, configModule);
+      modules.push(WebscrapModule, configModule, ThemeModule);
       controllers.push(AppController);
       providers.push(AppService);
     } else {
@@ -64,6 +67,7 @@ export class AppModule {
     }
 
     if (serviceName === 'web-watcher-api') {
+      modules.push(ThemeModule);
       controllers.push(AppController);
       providers.push(AppService);
     }
