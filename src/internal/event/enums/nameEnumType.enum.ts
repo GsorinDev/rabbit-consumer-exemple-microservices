@@ -1,3 +1,4 @@
 export enum NameEnumType {
-  PUBLISH_DOCUMENT = 'publish_document',
+  PUBLISH_THEME = 'publish_theme',
+  WEBSCRAPPING = 'WEBSCRAPPING',
 }

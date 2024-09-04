@@ -7,20 +7,21 @@ import { LoggerService } from '../../tools/logger/logger.service';
 
 @Injectable()
 export class EventService {
-  logger = new LoggerService(EventService.name);
-
   constructor(
     @InjectModel('events')
     private readonly eventModel: Model<EventDocument>,
-  ) {}
+    private readonly loggerService: LoggerService,
+  ) {
+    this.loggerService.setContext(EventService.name);
+  }
 
   async createEvent(createEventData: CreateEventDto): Promise<EventDocument> {
-    this.logger.log(
+    this.loggerService.log(
       'Creating event with data: ' + JSON.stringify(createEventData),
     );
     const createdEvent = new this.eventModel(createEventData);
     const savedEvent = await createdEvent.save();
-    this.logger.log('Saved event: ' + JSON.stringify(savedEvent));
+    this.loggerService.log('Saved event: ' + JSON.stringify(savedEvent));
     return savedEvent;
   }
 }

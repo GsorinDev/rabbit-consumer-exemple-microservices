@@ -1,7 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { ConsoleLogger, Injectable, Scope } from '@nestjs/common';
 
-@Injectable()
-export class LoggerService extends Logger {
+@Injectable({ scope: Scope.TRANSIENT })
+export class LoggerService extends ConsoleLogger {
   log(message: string) {
     super.log(message);
   }
@@ -22,13 +22,12 @@ export class LoggerService extends Logger {
     super.verbose(message);
   }
 
-  subscriber(message: string, context?: string) {
+  subscriber(message: string) {
     const mauveColor = '\x1b[35m'; // Code couleur ANSI pour le mauve
     const resetColor = '\x1b[0m'; // Code pour réinitialiser la couleur
     const yellowColor = '\x1b[33m';
     const processId = process.pid; // ID du processus en cours
 
-    // Format de la date
     const date = new Date();
     const formattedDate = date
       .toLocaleString('fr-FR', {
@@ -42,7 +41,7 @@ export class LoggerService extends Logger {
       .replace(',', '');
 
     const formattedMessage = `${mauveColor}[Nest] ${processId}  - ${resetColor}${formattedDate}     ${mauveColor}SUBSCRIBER ${yellowColor}[${
-      context || 'Subscriber'
+      this.context || 'Subscriber'
     }] ${mauveColor}${message}${resetColor}`;
 
     console.log(formattedMessage);

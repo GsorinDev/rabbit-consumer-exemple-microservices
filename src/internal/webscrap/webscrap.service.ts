@@ -7,9 +7,12 @@ import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 
 @Injectable()
 export class WebscrapService {
-  logger = new LoggerService(WebscrapService.name);
-
-  constructor(private readonly eventService: EventService) {}
+  constructor(
+    private readonly eventService: EventService,
+    private readonly loggerService: LoggerService,
+  ) {
+    this.loggerService.setContext(WebscrapService.name);
+  }
 
   @RabbitSubscribe({
     exchange: 'web-watcher',
@@ -17,9 +20,9 @@ export class WebscrapService {
     queue: 'service-webscrapping-queue',
   })
   async onWebscrapping(message: string): Promise<void> {
-    this.logger.log(`Received message: ${message}`);
+    this.loggerService.log(`Received message: ${message}`);
     await this.eventService.createEvent({
-      name: NameEnumType.PUBLISH_DOCUMENT,
+      name: NameEnumType.WEBSCRAPPING,
       process_type: ProcessEnumType.PROCESS,
     });
   }

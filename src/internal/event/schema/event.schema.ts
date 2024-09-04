@@ -12,5 +12,8 @@ export class InternalEvent {
 
   @Prop({ required: true })
   process_type: ProcessEnumType;
+
+  @Prop({ required: false })
+  theme_id: string;
 }
 export const EventSchema = SchemaFactory.createForClass(InternalEvent);

@@ -1,11 +1,4 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsUrl,
-  IsEnum,
-  IsInt,
-  IsDate,
-} from 'class-validator';
+import { IsString, IsNotEmpty, IsUrl, IsEnum, IsDate } from 'class-validator';
 import { fluxRssType } from '../enum/fluxRssType.enum';
 import { Type } from 'class-transformer';
 

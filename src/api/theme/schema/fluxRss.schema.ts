@@ -4,10 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Schema()
 export class FluxRss {
-  @Prop({ type: String, default: uuidv4 })
+  @Prop({ type: String, default: uuidv4, unique: false })
   _id: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: false })
   url: string;
 
   @Prop({ required: true })
