@@ -8,6 +8,7 @@ import {
 import { Type } from 'class-transformer';
 import { FluxRssDto } from './fluxRss.dto';
 import { IsUniqueFluxRss } from '../decorator/isUniqueFluxRss.decorator';
+import { NotEmptyStrings } from '../decorator/NotEmptyStrings.decorator';
 
 export class CreateThemeDto {
   @IsString()
@@ -24,5 +25,6 @@ export class CreateThemeDto {
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
+  @NotEmptyStrings()
   keywords: string[];
 }
